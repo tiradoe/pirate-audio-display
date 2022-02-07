@@ -1,0 +1,2 @@
+pillow
+mopidy-asyncio-client
