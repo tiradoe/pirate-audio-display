@@ -108,7 +108,7 @@ class PirateDisplay():
         # Track name
         draw.multiline_text((10,20), align="left", text= "\n".join(song_title), font=font, stroke_fill=(1,103,181), stroke_width=2)
         # Artist name
-        draw.multiline_text((10,195), align="left", text="\n".join(artist), font=font, stroke_fill=(1,103,181), stroke_width=2)
+        draw.multiline_text((10,190), align="left", text="\n".join(artist), font=font, stroke_fill=(1,103,181), stroke_width=2)
 
         image.show()
 

@@ -1,0 +1,15 @@
+# Put this file in /usr/lib/systemd/system/
+# Run "systemctl enable mopidy-display" to launch on startup
+[Unit]
+Description=Mopidy Display
+After=network-online.target time-sync.target sound.target avahi-daemon.service pulseaudio.service
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/home/pi/pirate-audio-display/start.sh
+Restart=on-failure
+User=pi
+Group=pi
+
+[Install]
+WantedBy=multi-user.target
