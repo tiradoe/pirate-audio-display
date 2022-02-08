@@ -32,6 +32,7 @@ class PirateDisplay():
 
 
     async def connect(self):
+        """Create a connection to Mopidy"""
         await self.setup_buttons()
         self.loop = asyncio.get_running_loop()
 
@@ -45,6 +46,7 @@ class PirateDisplay():
 
 
     async def setup_buttons(self):
+        """Add handlers to each button"""
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.buttons, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
@@ -55,22 +57,27 @@ class PirateDisplay():
 
 
     def handle_A(self,pin):
+        """Decrease volume"""
         self.loop.create_task(self.update_volume('down'))
 
 
     def handle_B(self, pin):
+        """Go to previous track"""
         self.loop.create_task(self.running_client.playback.previous())
 
 
     def handle_X(self,pin):
+        """Increase Volume"""
         self.loop.create_task(self.update_volume('up'))
 
 
     def handle_Y(self, pin):
+        """Play next track"""
         self.loop.create_task(self.running_client.playback.next())
 
 
     async def update_volume(self, direction):
+        """Increase or decrease the Mopidy server volume"""
         current_volume = await self.loop.create_task(self.running_client.mixer.get_volume())
         if direction == 'up':
             await self.running_client.mixer.set_volume(current_volume + 15)
@@ -79,11 +86,12 @@ class PirateDisplay():
 
 
     async def playback_started_handler(self, data):
-        """Updates the diplay when the track changes"""
+        """Update the diplay when the track changes"""
         await self.display(self.running_client)
 
 
     async def display(self, client):
+        """Generate the image to be displayed and send it to the device"""
         current_track = await client.playback.get_current_tl_track()
 
         album_uri = current_track["track"]["album"]["uri"]
@@ -102,12 +110,13 @@ class PirateDisplay():
 
         font = ImageFont.truetype("./fonts/Narifah-EaBWz.otf", 20)
         draw = ImageDraw.Draw(image)
-        song_title = textwrap.wrap(current_track["track"]["name"], 20)
-        artist = textwrap.wrap(current_track["track"]["artists"][0]["name"], 20)
 
         # Track name
+        song_title = textwrap.wrap(current_track["track"]["name"], 20)
         draw.multiline_text((10,20), align="left", text= "\n".join(song_title), font=font, stroke_fill=(1,103,181), stroke_width=2)
+
         # Artist name
+        artist = textwrap.wrap(current_track["track"]["artists"][0]["name"], 20)
         draw.multiline_text((10,190), align="left", text="\n".join(artist), font=font, stroke_fill=(1,103,181), stroke_width=2)
 
         image.show()
