@@ -9,6 +9,9 @@ Uses the [Narifa](https://www.fontspace.com/narifah-font-f72202) font
 
 ## Controls
 A button: Volume down
+
 X button: Volume up
+
 B button: Previous Track
+
 Y button: Next Track
