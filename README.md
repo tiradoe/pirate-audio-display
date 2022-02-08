@@ -6,3 +6,9 @@ Shows playing track and album art from Mopidy on Pimoni Pirate Audio screen.  Su
 ![display example](https://i.imgur.com/F0jGexo.jpg)
 
 Uses the [Narifa](https://www.fontspace.com/narifah-font-f72202) font
+
+## Controls
+A button: Volume down
+X button: Volume up
+B button: Previous Track
+Y button: Next Track
