@@ -22,7 +22,6 @@ class PirateDisplay():
                 spi_speed_hz=self.SPI_SPEED_MHZ * 1000 * 1000
         )
         self.buttons = [5,6,16,24]
-        self.labels = ['A', 'B', 'X', 'Y']
 
         config = configparser.ConfigParser()
         config.read("config.ini")
@@ -91,7 +90,7 @@ class PirateDisplay():
 
 
     async def display(self, client):
-        """Generate the image to be displayed and send it to the device"""
+        """Generate the image to be displayed and send it to the device screen"""
         current_track = await client.playback.get_current_tl_track()
 
         album_uri = current_track["track"]["album"]["uri"]
