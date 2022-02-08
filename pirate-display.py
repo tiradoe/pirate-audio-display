@@ -25,6 +25,7 @@ class PirateDisplay():
         self.mopidy_host = config["pirate-display"]["mopidy_host"]
         self.mopidy_web_port = config["pirate-display"]["mopidy_web_port"]
 
+
     async def connect(self):
         async with MopidyClient(host=self.mopidy_host) as mopidy:
             self.running_client = mopidy
@@ -43,10 +44,10 @@ class PirateDisplay():
     async def display(self, client):
         current_track = await client.playback.get_current_tl_track()
 
-        image_uri = current_track["track"]["album"]["uri"]
-        image_location = await client.library.get_images([image_uri])
+        album_uri = current_track["track"]["album"]["uri"]
+        album_art = await client.library.get_images([album_uri])
 
-        image_url = f"http://{self.mopidy_host}:{self.mopidy_web_port}{image_location[image_uri][0]['uri']}"
+        image_url = f"http://{self.mopidy_host}:{self.mopidy_web_port}{album_art[album_uri][0]['uri']}"
         urllib.request.urlretrieve(image_url, "/tmp/album.jpeg")
 
         image = Image.open("/tmp/album.jpeg")
